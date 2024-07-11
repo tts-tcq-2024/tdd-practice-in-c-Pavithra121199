@@ -58,6 +58,8 @@ TEST(StringCalculatorAddTests, ExpectSumWithDelimiterofAnyLength) {
 }
 
 TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
+    char* expectedresult= "negatives not allowed: -3 -4";
     const char* input = "1,-3,-4";
-    ASSERT_EXIT(add(input), ::testing::ExitedWithCode(EXIT_FAILURE), ".*negatives not allowed.*");
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
 }
