@@ -50,7 +50,14 @@ TEST(StringCalculatorAddTests, ExpectSumWithCustomDelimiterAtStart) {
     ASSERT_EQ(result, expectedresult);
 }
 
+TEST(StringCalculatorAddTests, ExpectSumWithDelimiterofAnyLength) {
+    int expectedresult = 15;
+    const char* input = "//[*]\n12***3";
+    int result = add(input);
+    ASSERT_EQ(result, expectedresult);
+}
+
 TEST(StringCalculatorAddTests, ExpectExceptionForNegativeNumbers) {
     const char* input = "1,-3,-4";
-    ASSERT_EXIT(add(input), ::testing::ExitedWithCode(EXIT_FAILURE), ".*");
+    ASSERT_EXIT(add(input), ::testing::ExitedWithCode(EXIT_FAILURE), ".*negatives not allowed.*");
 }
