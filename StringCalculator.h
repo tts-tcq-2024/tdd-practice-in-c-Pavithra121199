@@ -116,7 +116,7 @@ void sum_valid_numbers_and_ignore_large(int* num_array, int num_count, int* sum_
     }
 }
 
-// Main function to add numbers from the input string
+// Main function to add numbers from the input string 
 int add(const char* input_string) {
     if (*input_string == '\0') {
         return 0;
