@@ -98,26 +98,12 @@ bool contains_negatives(int* numbers_array, int size) {
     return false;
 }
 
-// Function to construct an error message for negative numbers
-void construct_negative_error_message(int* numbers_array, int size, char* message_str) {
-    strcpy(message_str, "negatives not allowed: ");
-    for (int i = 0; i < size; i++) {
-        if (numbers_array[i] < 0) {
-            char num_string[12];
-            snprintf(num_string, sizeof(num_string), "%d", numbers_array[i]);
-            strcat(message_str, num_string);
-            strcat(message_str, " ");
-        }
-    }
-}
-
-// Function to check for negative numbers and print an error message if found
+// Function that throws an exception on negative numbers
 void check_for_negative_numbers(int* numbers_array, int size) {
-    if (contains_negatives(numbers_array, size)) {
-        char message_str[256];
-        construct_negative_error_message(numbers_array, size, message_str);
-        printf("%s\n", message_str);
-        exit(EXIT_FAILURE);
+    for (int i = 0; i < size; ++i) {
+        if (numbers_array[i] < 0) {
+            throw std::runtime_error("negatives not allowed");
+        }
     }
 }
 
