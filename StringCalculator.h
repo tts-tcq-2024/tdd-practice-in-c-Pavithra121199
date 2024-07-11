@@ -3,16 +3,16 @@
 #include <string.h>
 #include <stdbool.h>
 
-// Check if the input string starts with a custom delimiter or newline
+// Check if the input starts with a custom delimiter
 bool is_custom_delimiter(const char* input) {
     return (input[0] == '/' && input[1] == '/') || (input[0] == '\n');
 }
 
-// Find the start and end positions of the custom delimiter in the input string
+// Find the custom delimiter in the input string
 void find_custom_delimiter(const char* input, const char** start_pos, const char** end_pos) {
     if (input[0] == '/') {
         *start_pos = input + 2; // Skip over '//'
-        *end_pos = strchr(*start_pos, '\n');
+        *end_pos = strchr(*start_pos, '\n'); // Find newline after the delimiter
     } else if (input[0] == '\n') {
         *start_pos = input + 1; // Skip '\n'
         *end_pos = NULL; // No delimiter after '\n'
@@ -33,10 +33,17 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
     }
 }
 
-// Skip over the double slash and newline if present
+// Skip over the double slash and newline if present, otherwise handle invalid input
 const char* skip_double_slash(const char* input) {
     if (input[0] == '/' && input[1] == '/') {
-        return strchr(input, '\n') + 1; // Skip over '//'
+        const char* newline_pos = strchr(input, '\n');
+        if (newline_pos) {
+            return newline_pos + 1; // Skip over '//'
+        } else {
+            // Invalid input case, should terminate
+            fprintf(stderr, "Invalid input: Missing newline after custom delimiter\n");
+            exit(EXIT_FAILURE);
+        }
     }
     return input;
 }
@@ -120,8 +127,8 @@ void check_negatives(int* numbers, int size) {
     if (has_negatives(numbers, size)) {
         char message[256];
         construct_negative_message(numbers, size, message);
-        printf("%s\n", message);
-        // exit(EXIT_FAILURE);
+        fprintf(stderr, "%s\n", message);
+        exit(EXIT_FAILURE);
     }
 }
 
