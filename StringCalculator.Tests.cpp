@@ -59,6 +59,5 @@ TEST(StringCalculatorAddTests, ExpectSumWithDelimiterofAnyLength) {
 
 TEST(ExceptionHandlingTest, NegativeNumbersException) {
     int numbers_array[] = {1, -3, -4};
-    // Use ASSERT_THROW to check if an exception is thrown
-    ASSERT_THROW(check_for_negative_numbers(numbers_array, sizeof(numbers_array)), std::runtime_error);
+    ASSERT_THROW(check_for_negative_numbers(numbers_array, sizeof(numbers_array)), std::runtime_error);   
 }
