@@ -62,7 +62,7 @@ TEST(StringCalculatorCheckNegativesTests, ExpectExitOnNegativeNumbers) {
     // Redirect stderr to capture output
     testing::internal::CaptureStderr();
     // Call the function that triggers the error message
-    check_for_negative_numbers(input);
+    add(input);
     // Get the captured stderr output
     std::string stderr_output = testing::internal::GetCapturedStderr();
     // Check if the error message contains the expected substring
