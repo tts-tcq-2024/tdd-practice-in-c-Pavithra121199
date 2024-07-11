@@ -57,15 +57,9 @@ TEST(StringCalculatorAddTests, ExpectSumWithDelimiterofAnyLength) {
     ASSERT_EQ(result, expectedresult);
 }
 
-TEST(StringCalculatorCheckNegativesTests, ExpectExitOnNegativeNumbers) {
-    const char* input = "1,-3,-4";
-    // Redirect stderr to capture output
-    testing::internal::CaptureStderr();
-    // Call the function that triggers the error message
-    add(input);
-    // Get the captured stderr output
-    std::string stderr_output = testing::internal::GetCapturedStderr();
-    // Check if the error message contains the expected substring
-    ASSERT_TRUE(stderr_output.find("negatives not allowed: -3 -4") != std::string::npos)
-        << "Expected error message containing 'negatives not allowed: -3 -4', got: " << stderr_output;
+TEST(ExceptionHandlingTest, NegativeNumbersException) {
+    int numbers_array[] = {1, -3, -4};
+    int size = sizeof(numbers_array) / sizeof(numbers_array[0]);
+    // Use ASSERT_THROW to check if an exception is thrown
+    ASSERT_THROW(check_for_negative_numbers(numbers_array, size), std::runtime_error);
 }
