@@ -88,16 +88,6 @@ void split_numbers_by_delimiter(const char* str, const char* delimiter_str, int*
     free(copy_str);
 }
 
-// Function to check if the array of numbers contains any negative values
-bool contains_negatives(int* numbers_array, int size) {
-    for (int i = 0; i < size; i++) {
-        if (numbers_array[i] < 0) {
-            return true;
-        }
-    }
-    return false;
-}
-
 // Function that throws an exception on negative numbers
 void check_for_negative_numbers(int* numbers_array, int size) {
     for (int i = 0; i < size; ++i) {
