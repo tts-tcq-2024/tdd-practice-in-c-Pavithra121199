@@ -5,13 +5,12 @@
 
 // Function to find the start and end positions of the custom delimiter in the input string
 void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
-    if (input_string[0] == '/') {
-        *start_ptr = input_string + 2; // Skip over '//'
+   const char* start_ptr = NULL;
+   const char* end_ptr = NULL;
+    if (input_string[0] == '/' && input_string[1] == '/') {
+        *start_ptr = input_string + 2; 
         *end_ptr = strchr(*start_ptr, '\n');
-    } else {
-        *start_ptr = NULL;
-        *end_ptr = NULL;
-    }
+        
 }
 
 // Function to extract the custom delimiter from the input string
@@ -19,7 +18,6 @@ void extract_custom_delimiter_string(const char* input_string, char* delimiter_s
     const char* start_ptr;
     const char* end_ptr;
     find_custom_delimiter_bounds(input_string, &start_ptr, &end_ptr);
-
     if (start_ptr && end_ptr) {
         strncpy(delimiter_str, start_ptr, end_ptr - start_ptr);
         delimiter_str[end_ptr - start_ptr] = '\0';
@@ -28,34 +26,20 @@ void extract_custom_delimiter_string(const char* input_string, char* delimiter_s
     }
 }
 
-// Function to skip over the double slash and newline if present
-const char* skip_double_slash_prefix(const char* input_string) {
-    if (input_string[0] == '/' && input_string[1] == '/') {
-        return strchr(input_string, '\n') + 1; // Skip over '//'
-    }
-    return input_string;
-}
-
-// Function to get the starting position of the actual number string in the input
-const char* get_start_number_position(const char* input_string) {
-    return skip_double_slash_prefix(input_string);
-}
-
-// Function to replace newlines with commas in the input string for uniform delimiter handling
-void replace_newlines_with_commas(char* string_ptr) {
-    while (*string_ptr) {
-        if (*string_ptr == '\n') {
-            *string_ptr = ','; // Replace '\n' with ','
-        }
-        string_ptr++;
-    }
-}
-
 // Function to extract the number portion from the input string
 void extract_number_part(const char* input_string, char* numbers_str) {
-    const char* start_ptr = get_start_number_position(input_string);
+    const char* start_ptr = input_string;
+    if (input_string[0] == '/' && input_string[1] == '/') {
+        start_ptr = strchr(input_string, '\n') + 1; // Skip over '//'
+    }
     strcpy(numbers_str, start_ptr);
-    replace_newlines_with_commas(numbers_str); // Replace '\n' with ','
+
+    // Replace '\n' with ','
+    for (char* ptr = numbers_str; *ptr; ++ptr) {
+        if (*ptr == '\n') {
+            *ptr = ',';
+        }
+    }
 }
 
 // Function to parse the input string to extract the delimiter and numbers
