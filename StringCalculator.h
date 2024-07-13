@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-
-// Function to check if the input string starts with a custom delimiter or newline
-bool starts_with_custom_delimiter(const char* input_string) {
-    return (input_string[0] == '/' && input_string[1] == '/');
-}
+#include <stdexcept>
 
 // Function to find the start and end positions of the custom delimiter in the input string
 void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
@@ -41,24 +36,16 @@ const char* skip_double_slash_prefix(const char* input_string) {
     return input_string;
 }
 
-// Function to skip over the newline if present
-const char* skip_newline_prefix(const char* input_string) {
-    if (input_string[0] == '\n') {
-        return input_string + 1; // Skip '\n'
-    }
-    return input_string;
-}
-
 // Function to get the starting position of the actual number string in the input
 const char* get_start_number_position(const char* input_string) {
-    return skip_double_slash_prefix(skip_newline_prefix(input_string));
+    return skip_double_slash_prefix(input_string);
 }
 
 // Function to replace newlines with commas in the input string for uniform delimiter handling
 void replace_newlines_with_commas(char* string_ptr) {
     while (*string_ptr) {
         if (*string_ptr == '\n') {
-            *string_ptr = ','; // Replace '\n' with ','
+            *string_ptr = ',';     // Replace '\n' with ','
         }
         string_ptr++;
     }
