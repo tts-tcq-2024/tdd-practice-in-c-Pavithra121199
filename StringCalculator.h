@@ -3,15 +3,25 @@
 #include <string.h>
 #include <stdexcept>
 
+// Function to find the start and end positions of the custom delimiter in the input string
+void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
+    if (input_string[0] == '/' && input_string[1] == '/') {
+        *start_ptr = input_string + 2; // Skip over '//'
+        *end_ptr = strchr(*start_ptr, '\n'); // Find the newline character
+    } else {
+        *start_ptr = NULL;
+        *end_ptr = NULL;
+    }
+}
+
 // Function to extract the custom delimiter from the input string
 void extract_custom_delimiter_string(const char* input_string, char* delimiter_str) {
-    if (input_string[0] == '/' && input_string[1] == '/') {
-        const char* start_ptr = input_string + 2; // Skip over '//'
-        const char* end_ptr = strchr(start_ptr, '\n'); // Find the newline character
-        if (end_ptr) {
-            strncpy(delimiter_str, start_ptr, end_ptr - start_ptr); // Copy the custom delimiter
-            delimiter_str[end_ptr - start_ptr] = '\0'; // Null terminate the delimiter string
-        }
+    const char* start_ptr;
+    const char* end_ptr;
+    find_custom_delimiter_bounds(input_string, &start_ptr, &end_ptr);
+    if (start_ptr && end_ptr) {
+        strncpy(delimiter_str, start_ptr, end_ptr - start_ptr); // Copy the custom delimiter
+        delimiter_str[end_ptr - start_ptr] = '\0'; 
     } else {
         strcpy(delimiter_str, ","); // Default delimiter is ","
     }
@@ -55,11 +65,11 @@ void check_for_negative_numbers(int* numbers_array, int size) {
 }
 
 // Function to sum valid numbers (ignoring those greater than 1000)
-int sum_valid_numbers_and_ignore_large(int* num_array, int num_count) {
+int sum_valid_numbers(int* num_array, int num_count) {
     int sum = 0;
     for (int i = 0; i < num_count; i++) {
         if (num_array[i] <= 1000) {
-            sum += num_array[i]; 
+            sum += num_array[i];
         }
     }
     return sum;
@@ -68,15 +78,14 @@ int sum_valid_numbers_and_ignore_large(int* num_array, int num_count) {
 // Main function to add numbers from the input string 
 int add(const char* input_string) {
     if (*input_string == '\0') {
-        return 0;
+        return 0; 
     }
-    char delimiter_str[10] = {0};
-    char numbers_str[1000] = {0}; 
+    char delimiter_str[10] = {0}; 
+    char numbers_str[1000] = {0};
     parse_input_string(input_string, delimiter_str, numbers_str);
-    int num_array[1000];
+    int num_array[1000]; 
     int num_count = 0;
     split_numbers_by_delimiter(numbers_str, delimiter_str, num_array, &num_count); 
     check_for_negative_numbers(num_array, num_count);
-    return sum_valid_numbers_and_ignore_large(num_array, num_count); 
-   
+    return sum_valid_numbers(num_array, num_count); 
 }
