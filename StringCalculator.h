@@ -5,12 +5,9 @@
 
 // Function to find the start and end positions of the custom delimiter in the input string
 void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
-   const char* start_ptr = NULL;
-   const char* end_ptr = NULL;
     if (input_string[0] == '/' && input_string[1] == '/') {
         *start_ptr = input_string + 2; 
-        *end_ptr = strchr(*start_ptr, '\n');
-        
+        *end_ptr = strchr(*start_ptr, '\n');        
 }
 
 // Function to extract the custom delimiter from the input string
