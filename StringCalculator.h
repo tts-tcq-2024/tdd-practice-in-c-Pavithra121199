@@ -5,11 +5,14 @@
 
 // Function to find the start and end positions of the custom delimiter in the input string
 void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
-    if (input_string[0] == '/' && input_string[1] == '/') {
-        *start_ptr = input_string + 2; 
-        *end_ptr = strchr(*start_ptr, '\n');        
-}
-
+    if (input_string[0] == '/') {
+        *start_ptr = input_string + 2; // Skip over '//'
+        *end_ptr = strchr(*start_ptr, '\n');
+    } else {
+        *start_ptr = NULL;
+        *end_ptr = NULL;
+    }
+} 
 // Function to extract the custom delimiter from the input string
 void extract_custom_delimiter_string(const char* input_string, char* delimiter_str) {
     const char* start_ptr;
@@ -30,11 +33,9 @@ void extract_number_part(const char* input_string, char* numbers_str) {
         start_ptr = strchr(input_string, '\n') + 1; // Skip over '//'
     }
     strcpy(numbers_str, start_ptr);
-
-    // Replace '\n' with ','
     for (char* ptr = numbers_str; *ptr; ++ptr) {
-        if (*ptr == '\n') {
-            *ptr = ',';
+        if (*ptr == '\n') {           
+            *ptr = ',';      // Replace '\n' with ','
         }
     }
 }
