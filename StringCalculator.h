@@ -85,10 +85,12 @@ int add(const char* input_string) {
     if (*input_string == '\0') {
         return 0;
     }
-    char delimiter_str[10] = {0};
-    char numbers_str[1000] = {0};
+    int max_delimiter_str_size =  10;
+    int max_numbers_str_size  = 100;
+    char delimiter_str[max_delimiter_str_size] = {0};
+    char numbers_str[max_numbers_str_size] = {0};
     parse_input_string(input_string, delimiter_str, numbers_str);
-    int num_array[1000];
+    int num_array[max_numbers_str_size];
     int num_count = 0;
     split_numbers_by_delimiter(numbers_str, delimiter_str, num_array, &num_count);
     check_for_negative_numbers(num_array, num_count);
