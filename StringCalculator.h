@@ -7,7 +7,7 @@
 void find_custom_delimiter_bounds(const char* input_string, const char** start_ptr, const char** end_ptr) {
     *start_ptr = NULL;
     *end_ptr = NULL;
-    if (input_string[0] == '/') {
+    if (input_string[0] == '/' && input_string[1] == '/') {
         *start_ptr = input_string + 2; // Skip over '//'
         *end_ptr = strchr(*start_ptr, '\n');
     } 
