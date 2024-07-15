@@ -87,8 +87,8 @@ int add(const char* input_string) {
     }
     int max_delimiter_str_size =  10;
     int max_numbers_str_size  = 100;
-    char delimiter_str[max_delimiter_str_size] = {0};
-    char numbers_str[max_numbers_str_size] = {0};
+    char delimiter_str[max_delimiter_str_size];
+    char numbers_str[max_numbers_str_size];
     parse_input_string(input_string, delimiter_str, numbers_str);
     int num_array[max_numbers_str_size];
     int num_count = 0;
