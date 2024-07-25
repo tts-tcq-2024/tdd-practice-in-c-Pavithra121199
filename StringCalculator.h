@@ -27,7 +27,7 @@ int value_less_than_thousand(int value) {
     return (value < 1000) ? value : 0;
 }
 
-void negative_value_exception(int value) {
+void check_negative_values(int value) {
     if (value<0) {
         throw std::runtime_error("negatives not allowed");
     }
