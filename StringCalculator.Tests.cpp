@@ -58,6 +58,6 @@ TEST(StringCalculatorAddTests, ExpectSumWithDelimiterofAnyLength) {
 }
 
 TEST(ExceptionHandlingTest, NegativeNumbersException) {
-    int numbers_array[] = {1, -3, -4};
-    ASSERT_THROW(check_for_negative_numbers(numbers_array, sizeof(numbers_array)), std::runtime_error);   
+    const char* input = "-1,2,3";
+    ASSERT_THROW(add(input), std::runtime_error);
 }
