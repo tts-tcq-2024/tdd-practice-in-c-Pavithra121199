@@ -49,7 +49,7 @@ int calculate_sum(const char* input, const char* delimiter) {
 }
 
 int add(const char* input) {
-    char delimiter[2] = ",\n";   
+    char delimiter[20] = ",\n";   
     int result = 0;
     if (is_empty_string(input)) {
         return 0;
