@@ -19,7 +19,7 @@ void has_custom_delimiter(const char* input, char* delimiter) {
     if (input[0] == '/' && input[1] == '/')
         extract_custom_delimiter(input, delimiter);
     else
-         strcpy(delimiter, ",");
+         strcpy(delimiter, ",\n");
 }
 
 
