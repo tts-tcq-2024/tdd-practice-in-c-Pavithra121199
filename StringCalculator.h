@@ -7,13 +7,6 @@ int is_empty_string(const char* input) {
     return (input == NULL || input[0] == '\0');
 }
 
-void has_custom_delimiter(const char* input, char* delimiter) {
-    if (input[0] == '/' && input[1] == '/')
-        extract_custom_delimiter(input, delimiter);
-    else
-         strcpy(delimiter, ",");
-}
-
 void extract_custom_delimiter(const char* input, char* delimiter) {
     int i = 2;     // Start after the initial //
     delimiter[0] = '\0';
@@ -22,6 +15,13 @@ void extract_custom_delimiter(const char* input, char* delimiter) {
         i++;
     }
 }
+void has_custom_delimiter(const char* input, char* delimiter) {
+    if (input[0] == '/' && input[1] == '/')
+        extract_custom_delimiter(input, delimiter);
+    else
+         strcpy(delimiter, ",");
+}
+
 
 int value_less_than_thousand(const char *input_segment) {
     int value_check = atoi(input_segment);
