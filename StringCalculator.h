@@ -12,7 +12,7 @@ int value_less_than_thousand(const char *input_segment) {
     return (value_check < 1000) ? value_check : 0;
 }
 
-int contains_negative(const char* input, const char* delimiter) {
+void contains_negative(const char* input, const char* delimiter) {
     char* duplicate_input = strdup(input);
     char* input_segment = strtok(duplicate_input, delimiter);
     while (input_segment != NULL) {
