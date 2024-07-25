@@ -7,6 +7,22 @@ int is_empty_string(const char* input) {
     return (input == NULL || input[0] == '\0');
 }
 
+void has_custom_delimiter(const char* input, char* delimiter) {
+    if (input[0] == '/' && input[1] == '/')
+        extract_custom_delimiter(input, delimiter);
+    else
+         strcpy(delimiter, ",");
+}
+
+void extract_custom_delimiter(const char* input, char* delimiter) {
+    int i = 2;     // Start after the initial //
+    delimiter[0] = '\0';
+    while (input[i] != '\0' && input[i] != '\n') {
+        strncat(delimiter, &input[i], 1);
+        i++;
+    }
+}
+
 int value_less_than_thousand(const char *input_segment) {
     int value_check = atoi(input_segment);
     return (value_check < 1000) ? value_check : 0;
@@ -25,20 +41,9 @@ void contains_negative(const char* input, const char* delimiter) {
     free(duplicate_input);
 }
 
-void handle_custom_delimiter(const char* input, char* delimiter) {
-    if (input[0] == '/' && input[1] == '/') {
-        strcpy(delimiter, "");
-        int i = 2; // Start after the initial //
-        while (input[i] != '\0' && input[i] != '\n') {
-            strncat(delimiter, &input[i], 1);
-            i++;
-        }
-    }
-}
-
 int calculate_sum(const char* input, const char* delimiter) {
     int sum = 0;
-    char* input_copy = strdup(input); // Create a modifiable copy   
+    char* input_copy = strdup(input); 
     char* input_segment = strtok(input_copy, delimiter);
     while (input_segment != NULL) {
         sum += value_less_than_thousand(input_segment);
@@ -49,13 +54,11 @@ int calculate_sum(const char* input, const char* delimiter) {
 }
 
 int add(const char* input) {
-    char delimiter[20] = ",\n";   
-    int result = 0;
+    char delimiter[20];
     if (is_empty_string(input)) {
         return 0;
-    }   
-    handle_custom_delimiter(input, delimiter);
+    }
+    has_custom_delimiter(input, delimiter);
     contains_negative(input, delimiter);
-    calculate_sum(input, delimiter);
-   return result;
+    return calculate_sum(input, delimiter);
 }
